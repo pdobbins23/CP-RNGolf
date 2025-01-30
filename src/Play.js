@@ -81,6 +81,14 @@ class Play extends Phaser.Scene {
         // one way movement
         let oneWayX = this.oneWay.x < width / 2 ? 1 : -1;
         this.oneWay.body.setVelocity(Phaser.Math.Between(100, 200) * oneWayX, 0);
+        this.oneWay.setCollideWorldBounds(true, 1, 1, true);
+
+        this.physics.world.on("worldbounds", (body, up, down, left, right) => {
+            if (body.gameObject == this.oneWay) {
+                let oneWayX = this.oneWay.x < width / 2 ? 1 : -1;
+                this.oneWay.body.setVelocity(Phaser.Math.Between(100, 200) * oneWayX, 0);
+            }
+        });
     }
 
     update() {
